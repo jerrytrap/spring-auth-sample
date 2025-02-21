@@ -1,4 +1,4 @@
-package org.example.springauthsample;
+package org.example.springauthsample.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

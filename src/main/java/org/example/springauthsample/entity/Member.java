@@ -1,4 +1,4 @@
-package org.example.springauthsample;
+package org.example.springauthsample.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

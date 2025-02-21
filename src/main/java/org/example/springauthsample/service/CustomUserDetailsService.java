@@ -1,6 +1,8 @@
-package org.example.springauthsample;
+package org.example.springauthsample.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springauthsample.entity.Member;
+import org.example.springauthsample.repository.MemberRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
