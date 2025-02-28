@@ -30,12 +30,11 @@ public class CookieUtil {
     }
 
     public String getCookieValue(String name) {
-        Cookie cookie = Arrays.stream(request.getCookies())
+        return Arrays.stream(request.getCookies())
                 .filter(c -> c.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Cookie not found"));
-
-        return cookie.getValue();
+                .map(Cookie::getValue)
+                .orElse(null);
     }
 
     public void deleteCookie(String name) {

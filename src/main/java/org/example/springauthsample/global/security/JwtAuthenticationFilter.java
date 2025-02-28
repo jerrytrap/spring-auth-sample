@@ -1,14 +1,11 @@
 package org.example.springauthsample.global.security;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.springauthsample.global.web.CookieUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,19 +23,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        if (request.getRequestURI().equals("/api/auth/sign-in")) {
+        if (request.getRequestURI().equals("/api/auth/sign-in") || request.getRequestURI().equals("/api/auth/sign-out")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         String token = cookieUtil.getCookieValue("access-token");
+        boolean isValidToken = jwtTokenProvider.validateToken(token);
 
-        if (jwtTokenProvider.validateToken(token)) {
+        if (token != null && isValidToken) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
+        }
+
+        if (!isValidToken) {
             cookieUtil.deleteCookie("access-token");
-            throw new RuntimeException("Invalid or null JWT token");
+            filterChain.doFilter(request, response);
+            return;
         }
 
         filterChain.doFilter(request, response);

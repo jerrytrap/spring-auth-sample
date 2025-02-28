@@ -25,4 +25,10 @@ public class AuthController {
 
         return ResponseEntity.ok(signInResponse);
     }
+
+    @PostMapping("/sign-out")
+    public ResponseEntity<Void> signOut() {
+        cookieUtil.deleteCookie("access-token");
+        return ResponseEntity.noContent().build();
+    }
 }

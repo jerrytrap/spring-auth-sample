@@ -28,7 +28,6 @@ export default function LoginPage() {
       if (result.status == 200) {
         router.replace("/");
       }
-      result.json().then((data) => console.log(data));
     });
   };
 

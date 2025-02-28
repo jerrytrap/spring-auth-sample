@@ -1,6 +1,7 @@
 package org.example.springauthsample.global.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -60,7 +61,7 @@ public class JwtTokenProvider {
                     .parseSignedClaims(token);
 
             return !claims.getPayload().getExpiration().before(new Date());
-        } catch (Exception e) {
+        } catch (ExpiredJwtException e) {
             return false;
         }
     }
