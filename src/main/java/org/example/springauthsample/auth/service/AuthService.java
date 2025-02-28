@@ -1,6 +1,7 @@
 package org.example.springauthsample.auth.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springauthsample.global.exception.PasswordMismatchException;
 import org.example.springauthsample.member.entity.Member;
 import org.example.springauthsample.global.security.JwtTokenProvider;
 import org.example.springauthsample.member.dto.SignInRequest;
@@ -22,7 +23,7 @@ public class AuthService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(signInRequest.getPassword(), member.getPassword())) {
-            throw new RuntimeException();
+            throw new PasswordMismatchException();
         }
 
         return SignInResponse.builder()

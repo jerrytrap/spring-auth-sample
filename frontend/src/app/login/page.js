@@ -27,6 +27,8 @@ export default function LoginPage() {
     response.then((result) => {
       if (result.status == 200) {
         router.replace("/");
+      } else if (result.status == 400) {
+        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
       }
     });
   };

@@ -30,7 +30,13 @@ public class CookieUtil {
     }
 
     public String getCookieValue(String name) {
-        return Arrays.stream(request.getCookies())
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies == null) {
+            throw new RuntimeException("No cookies found");
+        }
+
+        return Arrays.stream(cookies)
                 .filter(c -> c.getName().equals(name))
                 .findFirst()
                 .map(Cookie::getValue)
